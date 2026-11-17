@@ -2,22 +2,188 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GridMerge Web — 写真結合（GitHub Pages版）</title>
+<title>GridMerge Web v1.5 — 写真結合（GitHub Pages版）</title>
 <meta name="description" content="写真を分割テンプレートで結合できるブラウザ版GridMerge。画像はブラウザ内で処理し外部に送信しません。">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
 :root{font-family:system-ui,-apple-system,"Yu Gothic UI","Meiryo",sans-serif;color:#192b40;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}header{height:64px;background:#fff;border-bottom:1px solid #dee4ec;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,3vw,48px)}.brand{display:flex;align-items:center;gap:10px;font-weight:750;font-size:21px}.brand svg{width:33px;height:33px}header small{color:#768396;font-size:12px}main{max-width:1480px;margin:25px auto;padding:0 23px;display:grid;grid-template-columns:minmax(0,1.36fr) minmax(345px,.85fr);gap:20px}.panel{background:#fff;border:1px solid #dee4ec;border-radius:13px;padding:19px;box-shadow:0 2px 12px #16335409;min-width:0}.panel h2{font-size:16px;margin:0 0 13px;display:flex;align-items:center;gap:9px}h2 span{font-size:12px;color:#7d8fa4;font-weight:400}.sub{color:#6d7d91;font-size:12px;margin:7px 0 15px;line-height:1.6}.templates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.template{background:#fff;border:1.5px solid #e0e6ed;border-radius:9px;padding:9px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:11px;font:inherit;font-size:12px;color:#324256}.template:hover{border-color:#83acde}.template.active{border-color:#2472d2;background:#edf5ff;box-shadow:0 0 0 1px #2472d2}.template canvas{width:74px;height:55px;border:1px solid #d5dde8;border-radius:3px;background:#f6f8fc;flex-shrink:0}.preview-wrap{background:repeating-conic-gradient(#e3e8f0 0% 25%,#f4f6fa 0% 50%) 50%/18px 18px;border:1px solid #dbe2eb;border-radius:11px;min-height:290px;padding:20px;display:flex;align-items:center;justify-content:center;overflow:hidden}.preview{width:min(100%,650px);aspect-ratio:4/3;position:relative;background:#fff;box-shadow:0 5px 20px #0c315820;user-select:none;touch-action:none}.tile{position:absolute;overflow:hidden;background:#fff;border:0 solid white;touch-action:none;cursor:grab}.tile:active{cursor:grabbing}.tile.active{outline:2px solid #2775d5;outline-offset:-2px;z-index:2}.tile.drag-target{outline:3px solid #1eac78;outline-offset:-3px;z-index:3}.tile canvas{display:block;width:100%;height:100%}.tile .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#9caaba;gap:4px;font-size:12px;pointer-events:none}.tile .empty b{font-size:25px;font-weight:350}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.btn{border:1px solid #d5dfe9;background:#fff;color:#31445b;padding:9px 13px;border-radius:8px;cursor:pointer;font-weight:650;font-size:13px}.btn:hover{background:#f0f5fb}.btn.primary{background:#176ed4;border-color:#176ed4;color:#fff}.btn.primary:hover{background:#0a58b3}.btn:disabled{opacity:.45;cursor:not-allowed}.muted{color:#8492a5}.config{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.field{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#546478}.field input,.field select{height:36px;width:100%;border:1px solid #d7e0ea;border-radius:7px;background:#fff;padding:7px 9px;color:#243348;font-size:13px}.field input[type=checkbox]{height:auto;width:auto}.row{display:flex;align-items:center;gap:8px;font-size:12px;color:#526379}.fieldpair{display:flex;align-items:center;gap:7px}.fieldpair input{min-width:0}.result-surface{background:repeating-conic-gradient(#e3e8f0 0% 25%,#f4f6fa 0% 50%) 50%/18px 18px;border-radius:9px;min-height:280px;display:flex;align-items:center;justify-content:center;padding:14px}.result-surface img{max-width:100%;max-height:460px;object-fit:contain;cursor:grab;user-select:none;-webkit-user-drag:element;box-shadow:0 5px 19px #0c315820}.result-surface img:active{cursor:grabbing}.placeholder{text-align:center;color:#8592a4;font-size:13px;line-height:1.8}.placeholder strong{font-size:34px;font-weight:350}.status{min-height:20px;font-size:12px;color:#527196;margin-top:12px;line-height:1.6}.tips{background:#f2f7fc;border:1px solid #dfeaf7;border-radius:10px;padding:12px 14px;font-size:12px;color:#55708d;line-height:1.7;margin-top:13px}.downloadbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}.downloadbar .hint{font-size:11px;color:#8a96a5}.dropcover{position:fixed;inset:0;background:#186ccbe0;display:none;z-index:20;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;pointer-events:none}.dropcover.show{display:flex}@media(max-width:950px){main{grid-template-columns:1fr;padding:0 14px}header{padding:0 15px}.preview-wrap{min-height:230px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:420px){.config{grid-template-columns:1fr}.template canvas{width:56px;height:42px}header small{display:none}}
+
+/* v1.1 — desktop-first compact workbench for approximately 1200 × 800 */
+header{height:48px;padding:0 18px}
+header .brand{font-size:18px}
+header .brand svg{width:28px;height:28px}
+main{max-width:1600px;margin:10px auto;padding:0 12px;grid-template-columns:minmax(0,1.25fr) minmax(330px,.82fr);gap:12px;min-height:0;height:calc(100dvh - 68px)}
+.panel{padding:12px;min-height:0;display:flex;flex-direction:column;gap:0;overflow:auto}
+.panel h2{font-size:14px;margin:0 0 8px;flex-shrink:0}
+.toolbar{gap:6px;margin-bottom:8px;flex-shrink:0}
+.btn{padding:7px 10px;font-size:12px}
+.preview-wrap{height:clamp(205px,calc(100dvh - 330px),510px);min-height:0;flex:1 1 auto;padding:9px}
+.preview{height:100%;width:auto;max-width:100%;max-height:100%;box-shadow:0 2px 10px #0c315822}
+.sub{font-size:11px;line-height:1.35;margin:7px 0 9px;flex-shrink:0}
+.templates{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 7px;scroll-snap-type:x proximity;flex-shrink:0;scrollbar-width:thin}
+.template{flex:0 0 118px;min-width:0;min-height:59px;gap:5px;padding:5px;flex-direction:row;scroll-snap-align:start;font-size:10px;line-height:1.2}
+.template canvas{width:52px;height:44px;object-fit:contain;flex-shrink:0}
+.template span{overflow-wrap:anywhere}
+.settings-block{margin-top:6px;border:1px solid #dfe5ed;border-radius:8px;padding:0 10px;flex-shrink:0}
+.settings-block summary{cursor:pointer;font-size:12px;font-weight:700;padding:9px 0;color:#354b62;user-select:none}
+.settings-block[open] summary{border-bottom:1px solid #e5ebf1}
+.config{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 10px;margin:8px 0 11px}
+.field{font-size:11px;gap:3px}
+.field input,.field select{height:30px;padding:4px 7px;font-size:12px}
+.field.row{align-self:center}
+.row{font-size:11px}
+.result-surface{flex:1 1 auto;min-height:150px;padding:10px;overflow:hidden}
+.result-surface img{max-height:100%;max-width:100%;width:auto;height:auto}
+.tips{margin-top:9px;padding:9px 11px;font-size:11px;line-height:1.5;flex-shrink:0}
+.downloadbar{margin-top:8px;flex-shrink:0}
+.status{margin-top:8px;min-height:18px;flex-shrink:0}
+@media(max-width:950px){main{height:auto;display:grid;grid-template-columns:1fr;margin:8px auto;padding:0 10px}.panel{overflow:visible}.preview-wrap{height:clamp(250px,calc(100dvh - 330px),520px);flex:none}.result-surface{height:clamp(210px,45dvh,420px);flex:none}.config{grid-template-columns:repeat(2,minmax(0,1fr))}.templates{grid-template-columns:none}}
+@media(min-width:951px) and (max-height:720px){main{margin:6px auto;height:calc(100dvh - 60px)}.preview-wrap{height:clamp(175px,calc(100dvh - 330px),450px)}.tips{font-size:10px;padding:7px}.template{min-height:50px}.template canvas{height:38px;width:46px}}
+@media(max-width:420px){.config{grid-template-columns:repeat(2,minmax(0,1fr))}header small{display:none}.template canvas{width:45px;height:37px}}
+
+/* v1.2: four grouped template columns, no horizontal scrolling */
+.templates.grouped-templates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;overflow:visible;padding:0;scroll-snap-type:none;align-items:stretch;flex-shrink:0}
+.template-group{min-width:0;border:1px solid #dde6ef;background:#f9fbfe;border-radius:7px;padding:5px;display:flex;flex-direction:column;gap:5px}
+.template-group-title{text-align:center;color:#304d6f;font-size:11px;font-weight:750;border-bottom:1px solid #dce6f1;padding:1px 0 5px;line-height:1.2}
+.template-variants{display:flex;flex-direction:column;gap:4px}
+.grouped-templates .template{flex:none;width:100%;min-width:0;min-height:35px;padding:3px 4px;gap:4px;border-radius:5px;scroll-snap-align:none;line-height:1.15;font-size:10px;text-align:left}
+.grouped-templates .template canvas{width:39px;height:30px;border-radius:2px;flex-shrink:0}
+.grouped-templates .template span{min-width:0;overflow-wrap:anywhere}
+/* Unfilled slots need visible separation even with a zero-pixel output gap.
+   The outline is an EDITOR ONLY overlay, never painted to the exported image. */
+.tile.unfilled{background:#f4f7fb}
+.tile.unfilled::after{content:"";position:absolute;inset:0;border:2px solid #95abc4;pointer-events:none;z-index:1}
+.tile.unfilled .empty{z-index:2;color:#677e98;text-shadow:0 1px 0 #fff;font-weight:600}
+.tile.unfilled .empty b{color:#648bb3}
+.tile.unfilled.active{outline:2px solid #2775d5;outline-offset:-2px;z-index:2}
+@media(min-width:951px) and (max-height:760px){.preview-wrap{min-height:130px;height:clamp(145px,calc(100dvh - 400px),470px)}.grouped-templates .template{min-height:30px;padding:2px 3px;font-size:9px}.grouped-templates .template canvas{width:34px;height:26px}.template-group{padding:4px;gap:3px}.template-group-title{padding-bottom:3px}.template-variants{gap:3px}}
+@media(max-width:950px){.templates.grouped-templates{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:570px){.templates.grouped-templates{grid-template-columns:repeat(2,minmax(0,1fr))}.grouped-templates .template canvas{width:45px;height:32px}}
+
+
+/* v1.3: 1000px-wide two-pane workbench, 4 fixed template columns */
+@media (min-width:720px){
+  main{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:9px;padding:0 9px}
+  .panel{padding:10px}
+  .templates.grouped-templates{gap:4px}
+  .template-group{padding:3px;gap:3px}
+  .template-variants{gap:3px}
+  .grouped-templates .template{padding:2px 3px;font-size:9px;gap:3px;min-height:30px}
+  .grouped-templates .template canvas{width:31px;height:25px}
+  .template-group-title{font-size:10px;padding-bottom:3px}
+  .sub{margin:5px 0 7px}
+  .toolbar{margin-bottom:6px}
+  .tips{font-size:10px;padding:7px 8px;margin-top:7px}
+  .downloadbar{gap:5px;margin-top:6px}
+  .preview-wrap{min-height:110px}
+}
+@media (min-width:720px) and (max-width:1050px){
+  header small{font-size:10px}
+  .panel h2{font-size:13px}
+  .result-surface{min-height:120px}
+  .btn{padding:6px 8px;font-size:11px}
+  .preview-wrap{padding:6px}
+  .folder-state{font-size:10px}
+}
+@media (min-width:720px) and (max-height:760px){
+  .preview-wrap{height:clamp(125px,calc(100dvh - 390px),440px)}
+  .result-surface{min-height:100px}
+  .panel{gap:0}
+}
+@media (max-width:719px){
+  main{height:auto;grid-template-columns:1fr;margin:8px auto;padding:0 9px}
+  .panel{overflow:visible}
+  .preview-wrap{height:clamp(240px,46dvh,440px);flex:none}
+  .result-surface{height:clamp(190px,40dvh,400px);flex:none}
+  .templates.grouped-templates{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:570px){.templates.grouped-templates{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.folder-state{color:#536a85;font-size:11px;overflow-wrap:anywhere;line-height:1.35;flex:1 1 160px}
+#folderState.folder-ready{color:#167246;font-weight:650}
+
+/* v1.4: prioritize full-size editor preview; templates may flow below viewport.
+   At desktop widths, the left column and right result remain side-by-side. */
+@media (min-width:720px){
+  main{height:auto;min-height:0;align-items:start}
+  .panel{overflow:visible;min-height:0}
+  .preview-wrap{height:auto;min-height:0;flex:none;padding:8px;overflow:visible}
+  .preview{width:100%;height:auto;max-width:100%;max-height:none;flex:0 0 auto}
+  .result-surface{height:clamp(280px,54dvh,530px);min-height:0;flex:none}
+}
+@media (max-width:719px){
+  .preview-wrap{height:auto;min-height:0;flex:none;padding:8px}
+  .preview{width:100%;height:auto;max-width:100%;max-height:none;flex:0 0 auto}
+}
+
+/* v1.5: usable two-column workspace down to 800px viewport width.
+   Keep the editor as large as possible; templates may extend below the fold. */
+@media (min-width:680px) and (max-width:900px){
+  header{padding:0 10px}
+  header small{display:none}
+  main{
+    display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);
+    align-items:start;gap:8px;padding:0 8px;margin:8px auto;
+    height:auto;min-height:0;
+  }
+  .panel{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:visible;padding:9px;border-radius:10px}
+  .panel h2{font-size:13px}
+  .panel h2 span{font-size:10px}
+  .toolbar{gap:5px}
+  .btn{font-size:11px;padding:6px 7px}
+  .preview-wrap{width:100%;height:auto;min-height:0;flex:none;padding:6px;overflow:hidden}
+  .preview{width:100%;height:auto;max-height:none;max-width:100%;flex:none}
+  .templates.grouped-templates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .template-group{min-width:0}
+  .grouped-templates .template{font-size:10px}
+  .grouped-templates .template canvas{width:38px;height:29px}
+  .result-surface{width:100%;height:clamp(235px,45dvh,430px);min-height:0;flex:none;padding:7px}
+  .result-surface img{max-width:100%;max-height:100%}
+  .tips{font-size:10px;overflow-wrap:anywhere}
+  .downloadbar{align-items:start}
+  .folder-state{flex:1 1 100%;font-size:10px}
+  .config{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* At narrower widths, keep both panels full-width for usable photo editing. */
+@media(max-width:679px){
+  main{display:grid;grid-template-columns:minmax(0,1fr);height:auto;min-height:0;gap:10px;padding:0 9px;margin:8px auto}
+  .panel{overflow:visible;min-width:0}
+  .preview-wrap{height:auto;min-height:0;flex:none;padding:7px}
+  .preview{width:100%;height:auto;max-width:100%;max-height:none}
+  .result-surface{height:clamp(230px,42dvh,420px);min-height:0;flex:none}
+  .templates.grouped-templates{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* v1.7: move editor actions into the heading, preserving blank-tile file selection. */
+.editor-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;flex-wrap:wrap;margin-bottom:8px}
+.editor-heading h2{margin:0;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.editor-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:auto}
+.editor-actions .btn{white-space:nowrap;padding:6px 9px;font-size:12px}
+@media (min-width:680px) and (max-width:900px){
+ .editor-heading{gap:5px}
+ .editor-heading h2{gap:5px}
+ .editor-heading h2 span{font-size:10px}
+ .editor-actions{gap:4px}
+ .editor-actions .btn{padding:5px 6px;font-size:10px}
+}
+@media (max-width:420px){
+ .editor-heading h2 span{font-size:10px}
+ .editor-actions .btn{padding:5px 6px;font-size:10px}
+}
 </style>
 </head>
 <body>
 <header><div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="7" width="48" height="45" rx="6" fill="#1871c6"/><rect x="9" y="13" width="36" height="32" rx="3" fill="#e5f4ff"/><circle cx="19" cy="22" r="5" fill="#1871c6"/><path d="M10 42l12-13 8 8 7-10 8 11v6H10" fill="#1871c6"/><circle cx="47" cy="46" r="15" fill="#1ea34a" stroke="white" stroke-width="3"/><path d="M38 46l6 6 11-14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>GridMerge <span style="font-weight:450;color:#6b7f99;font-size:14px">Web</span></div><small>写真の処理は端末内で完結・サーバー送信なし</small></header>
 <main>
 <section class="panel">
-<h2>編集 <span>写真を配置して分割レイアウトを調整</span></h2>
-<div class="toolbar"><button class="btn" id="add">＋ 写真を追加</button><button class="btn" id="white">＋ 白画像</button><button class="btn" id="clear">全てクリア</button><input id="files" type="file" multiple accept="image/*" hidden></div>
+<div class="editor-heading">
+  <h2>編集 <span>写真を配置して分割レイアウトを調整</span></h2>
+  <div class="editor-actions"><button class="btn" id="white" type="button">＋ 白画像</button><button class="btn" id="clear" type="button">全てクリア</button></div>
+</div>
+<input id="files" type="file" multiple accept="image/*" hidden>
 <div class="preview-wrap"><div id="preview" class="preview" aria-label="画像の配置・トリミング編集エリア"></div></div>
-<div class="sub">枠をクリックして選択 → 写真を追加。枠内ドラッグで切り抜き位置を調整し、別の枠へドラッグすると入れ替えます。エクスプローラーから枠へ直接ドロップすることもできます。</div>
-<h2>分割テンプレート</h2><div id="templates" class="templates"></div>
+<div class="sub">枠内ドラッグ：写真の位置調整／別の枠へドラッグ：入れ替え／エクスプローラーからドロップ：写真の追加</div>
+<h2>分割テンプレート</h2><div id="templates" class="templates grouped-templates" aria-label="分割テンプレートを選択"></div>
+<details class="settings-block" id="settings"><summary>出力設定（サイズ・余白・形式など）</summary>
 <div class="config">
 <label class="field">画像の横幅（px）<input id="width" type="number" min="100" max="10000" value="2000"></label>
 <label class="field">画像の縦幅（px）<input id="height" type="number" min="100" max="10000" value="1500"></label>
@@ -28,13 +194,14 @@
 <label class="row"><input type="checkbox" id="lock" checked> 縦横比を固定する</label>
 <label class="field">保存ファイル名<input id="filename" value="GridMerge" maxlength="100"></label>
 </div>
+</details>
 </section>
 <aside class="panel">
-<h2>生成結果 <span>画像をドラッグして保存を試す</span></h2>
+<h2>生成結果 <span>画像をドラッグして保存</span></h2>
 <div class="toolbar"><button class="btn primary" id="generate">画像を生成</button><span id="outputInfo" class="muted" style="font-size:12px"></span></div>
 <div class="result-surface" id="resultSurface"><div class="placeholder" id="resultPlaceholder"><strong>▧</strong><div>写真を配置して「画像を生成」</div><div>生成結果がここに表示されます</div></div><img id="result" alt="生成した結合画像。エクスプローラーへドラッグできます" draggable="true" style="display:none"></div>
-<div class="tips"><b>エクスプローラーへドラッグ保存（試験的）</b><div>生成後、右の画像をマウスでつかみ、Windowsのエクスプローラーのフォルダーにドロップします。Chrome / Edgeでドラッグ保存を試せます。ただし、GitHub Pagesでは生成画像の公開URLを作れないため、Windowsのエクスプローラーにファイルとして渡せない環境があります。その場合は下の「通常の保存」を使用してください。</div></div>
-<div class="downloadbar"><button class="btn" id="download" disabled>↓ 通常の保存</button><span class="hint">ドラッグ保存が動かない場合の確実な保存方法</span></div>
+<div class="downloadbar"><button class="btn" id="chooseFolder" type="button">📁 保存フォルダを指定</button><button class="btn" id="clearFolder" type="button" hidden>指定解除</button><span class="folder-state" id="folderState">保存先未指定（生成後は通常の保存が使えます）</span></div>
+<div class="downloadbar"><button class="btn" id="download" disabled>↓ 通常の保存</button><span class="hint">保存フォルダ指定時は「画像を生成」で直接保存。未指定なら従来どおり</span></div>
 <div class="status" id="status" role="status">画像は外部サーバーへ送信しません。</div>
 </aside>
 </main>
@@ -47,6 +214,8 @@ const T=[
 {name:'2分割｜上下',ratio:[3,4],rects:[[0,0,1,.5],[0,.5,1,.5]]},
 {name:'3分割｜1＋2',ratio:[4,3],rects:[[0,0,.5,1],[.5,0,.5,.5],[.5,.5,.5,.5]]},
 {name:'3分割｜2＋1',ratio:[4,3],rects:[[0,0,.5,.5],[0,.5,.5,.5],[.5,0,.5,1]]},
+{name:'3分割｜上1+下2*',ratio:[8,9],rects:[[0,0,1,2/3],[0,2/3,.5,1/3],[.5,2/3,.5,1/3]]},
+	{name:'3分割｜上1＋下2',ratio:[4,5],rects:[[0,0,1,3/5],[0,3/5,.5,2/5],[.5,3/5,.5,2/5]]},
 {name:'4分割｜2×2（横）',ratio:[4,3],rects:[[0,0,.5,.5],[.5,0,.5,.5],[0,.5,.5,.5],[.5,.5,.5,.5]]},
 {name:'4分割｜2×2（縦）',ratio:[3,4],rects:[[0,0,.5,.5],[.5,0,.5,.5],[0,.5,.5,.5],[.5,.5,.5,.5]]},
 {name:'6分割｜3×2',ratio:[4,3],rects:Array.from({length:6},(_,i)=>[(i%3)/3,Math.floor(i/3)/2,1/3,1/2])},
@@ -58,27 +227,104 @@ function say(msg){status.textContent=msg}
 function number(id,fallback,min,max){const v=Number($(id).value);return Number.isFinite(v)?Math.max(min,Math.min(max,v)):fallback}
 function invalidate(){if(generatedURL)URL.revokeObjectURL(generatedURL);generatedURL=null;generatedBlob=null;result.removeAttribute('src');result.style.display='none';$('#resultPlaceholder').style.display='';$('#download').disabled=true;$('#outputInfo').textContent=''}
 function chosenTemplate(){return T[template]}
-function setTemplate(i){template=i;const t=chosenTemplate();const previous=slots;slots=t.rects.map((_,j)=>previous[j]||null);selected=Math.min(selected,slots.length-1);for(const [j,b] of [...templateBox.children].entries())b.classList.toggle('active',j===i);if($('#lock').checked){$('#height').value=Math.round(number('#width',2000,100,10000)*t.ratio[1]/t.ratio[0])}invalidate();render()}
-function makeThumb(t){const c=document.createElement('canvas');c.width=148;c.height=110;const ctx=c.getContext('2d');const r=t.ratio[0]/t.ratio[1];const W=r>=1?140:80,H=r>=1?105:106,left=(148-W)/2,top=(110-H)/2;ctx.fillStyle='#d7e4f3';for(let j=0;j<t.rects.length;j++){const [x,y,w,h]=t.rects[j];ctx.fillRect(left+x*W+1,top+y*H+1,w*W-2,h*H-2);ctx.fillStyle='#a6bad1';ctx.fillRect(left+x*W+6,top+y*H+6,Math.max(w*W-12,4),Math.max(h*H-12,4));ctx.fillStyle='#d7e4f3'}return c}
-T.forEach((t,i)=>{let b=document.createElement('button');b.className='template';b.type='button';b.appendChild(makeThumb(t));const s=document.createElement('span');s.textContent=t.name;b.appendChild(s);b.addEventListener('click',()=>setTemplate(i));templateBox.appendChild(b)});
+function setTemplate(i){template=i;const t=chosenTemplate();const previous=slots;slots=t.rects.map((_,j)=>previous[j]||null);selected=Math.min(selected,slots.length-1);for(const b of templateBox.querySelectorAll('.template'))b.classList.toggle('active',Number(b.dataset.templateIndex)===i);if($('#lock').checked){$('#height').value=Math.round(number('#width',2000,100,10000)*t.ratio[1]/t.ratio[0])}invalidate();render()}
+function makeThumb(t){const c=document.createElement('canvas');c.width=148;c.height=110;const ctx=c.getContext('2d');const r=t.ratio[0]/t.ratio[1];const W=Math.min(140,105*r),H=W/r,left=(148-W)/2,top=(110-H)/2;ctx.fillStyle='#d7e4f3';for(let j=0;j<t.rects.length;j++){const [x,y,w,h]=t.rects[j];ctx.fillRect(left+x*W+1,top+y*H+1,w*W-2,h*H-2);ctx.fillStyle='#a6bad1';ctx.fillRect(left+x*W+6,top+y*H+6,Math.max(w*W-12,4),Math.max(h*H-12,4));ctx.fillStyle='#d7e4f3'}return c}
+const templateGroups=[
+  {title:'2分割',indices:[0,1]},
+  {title:'3分割',indices:[2,3,4,5]},
+  {title:'4分割',indices:[6,7]},
+  {title:'その他',indices:[8,9,10]}
+];
+for(const group of templateGroups){
+  const column=document.createElement('div');column.className='template-group';
+  const heading=document.createElement('div');heading.className='template-group-title';heading.textContent=group.title;column.appendChild(heading);
+  const variants=document.createElement('div');variants.className='template-variants';
+  for(const i of group.indices){
+    const t=T[i],b=document.createElement('button');b.className='template';b.type='button';b.dataset.templateIndex=i;
+    b.appendChild(makeThumb(t));const label=document.createElement('span');
+    label.textContent=t.name.split('｜')[1]||t.name;
+    b.appendChild(label);b.title=t.name;b.setAttribute('aria-label',t.name);
+    b.addEventListener('click',()=>setTemplate(i));variants.appendChild(b);
+  }
+  column.appendChild(variants);templateBox.appendChild(column);
+}
 function getPreviewSize(){return [preview.clientWidth,preview.clientHeight]}
 function placement(sw,sh,dw,dh,cover,upscale,ox,oy){const scale=cover?Math.max(dw/sw,dh/sh):Math.min(dw/sw,dh/sh);const safeScale=upscale?scale:Math.min(scale,1);const iw=sw*safeScale,ih=sh*safeScale;let x=(dw-iw)/2,y=(dh-ih)/2;const extraX=Math.max(0,iw-dw),extraY=Math.max(0,ih-dh);x-=Math.max(-.5,Math.min(.5,ox||0))*extraX;y-=Math.max(-.5,Math.min(.5,oy||0))*extraY;return {x,y,iw,ih,extraX,extraY}}
 function drawSlot(ctx,slot,w,h,cover,upscale){ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);if(!slot)return;if(slot.white)return;const img=slot.img;if(!img)return;const p=placement(img.naturalWidth,img.naturalHeight,w,h,cover,upscale,slot.ox,slot.oy);ctx.drawImage(img,p.x,p.y,p.iw,p.ih)}
 function render(){const t=chosenTemplate(),[pw,ph]=getPreviewSize(),gap=number('#gap',3,0,200),outW=number('#width',2000,100,10000),outH=number('#height',1500,100,10000);if(pw<1||ph<1)return;preview.style.aspectRatio=outW+'/'+outH;preview.replaceChildren();const cover=$('#cover').checked,upscale=$('#upscale').checked;
-t.rects.forEach((r,i)=>{let el=document.createElement('div');el.className='tile'+(i===selected?' active':'');el.dataset.index=i;el.style.left=`${r[0]*100}%`;el.style.top=`${r[1]*100}%`;el.style.width=`${r[2]*100}%`;el.style.height=`${r[3]*100}%`;const cv=document.createElement('canvas');const sw=Math.max(1,Math.round((pw*r[2]-gap)*Math.min(devicePixelRatio||1,2))),sh=Math.max(1,Math.round((ph*r[3]-gap)*Math.min(devicePixelRatio||1,2)));cv.width=sw;cv.height=sh;const ctx=cv.getContext('2d');drawSlot(ctx,slots[i],sw,sh,cover,upscale);el.appendChild(cv);if(!slots[i]){const hint=document.createElement('div');hint.className='empty';hint.innerHTML='<b>＋</b>写真を追加';el.appendChild(hint)}let margin=gap/2;el.style.borderWidth=`${margin}px`;el.addEventListener('pointerdown',e=>pointerDown(e,i,el));el.addEventListener('pointermove',e=>pointerMove(e,i,el));el.addEventListener('pointerup',e=>pointerUp(e,i,el));el.addEventListener('pointercancel',()=>dragState=null);el.addEventListener('dragover',e=>{if(e.dataTransfer?.types.includes('Files')){e.preventDefault();el.classList.add('drag-target')}});el.addEventListener('dragleave',()=>el.classList.remove('drag-target'));el.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();el.classList.remove('drag-target');const f=[...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'));if(f.length)assignFiles(f,i)});preview.appendChild(el)})}
+t.rects.forEach((r,i)=>{let el=document.createElement('div');el.className='tile'+(i===selected?' active':'')+(!slots[i]?' unfilled':'');el.dataset.index=i;el.style.left=`${r[0]*100}%`;el.style.top=`${r[1]*100}%`;el.style.width=`${r[2]*100}%`;el.style.height=`${r[3]*100}%`;const cv=document.createElement('canvas');const sw=Math.max(1,Math.round((pw*r[2]-gap)*Math.min(devicePixelRatio||1,2))),sh=Math.max(1,Math.round((ph*r[3]-gap)*Math.min(devicePixelRatio||1,2)));cv.width=sw;cv.height=sh;const ctx=cv.getContext('2d');drawSlot(ctx,slots[i],sw,sh,cover,upscale);el.appendChild(cv);if(!slots[i]){const hint=document.createElement('div');hint.className='empty';hint.innerHTML='<b>＋</b>写真を追加';el.appendChild(hint)}let margin=gap/2;el.style.borderWidth=`${margin}px`;el.addEventListener('pointerdown',e=>pointerDown(e,i,el));el.addEventListener('pointermove',e=>pointerMove(e,i,el));el.addEventListener('pointerup',e=>pointerUp(e,i,el));el.addEventListener('pointercancel',()=>dragState=null);el.addEventListener('dragover',e=>{if(e.dataTransfer?.types.includes('Files')){e.preventDefault();el.classList.add('drag-target')}});el.addEventListener('dragleave',()=>el.classList.remove('drag-target'));el.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();el.classList.remove('drag-target');const f=[...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'));if(f.length)assignFiles(f,i)});preview.appendChild(el)})}
 function pointerDown(e,i,el){if(e.button!==0)return;selected=i;for(const tile of preview.children)tile.classList.toggle('active',Number(tile.dataset.index)===i);const r=el.getBoundingClientRect();dragState={idx:i,startX:e.clientX,startY:e.clientY,lastX:e.clientX,lastY:e.clientY,el,sw:r.width,sh:r.height,moved:false};el.setPointerCapture(e.pointerId)}
 function pointerMove(e,i,el){if(!dragState||dragState.idx!==i)return;const d=dragState;const dx=e.clientX-d.startX,dy=e.clientY-d.startY;if(Math.hypot(dx,dy)>5)d.moved=true;const s=slots[i];if(s&&!s.white&&s.img){const cover=$('#cover').checked,upscale=$('#upscale').checked,p=placement(s.img.naturalWidth,s.img.naturalHeight,d.sw,d.sh,cover,upscale,s.ox,s.oy);if(p.extraX>0)s.ox=Math.max(-.5,Math.min(.5,(s.ox||0)-(e.clientX-d.lastX)/p.extraX));if(p.extraY>0)s.oy=Math.max(-.5,Math.min(.5,(s.oy||0)-(e.clientY-d.lastY)/p.extraY));if(p.extraX>0||p.extraY>0){drawSlot(el.querySelector('canvas').getContext('2d'),s,el.querySelector('canvas').width,el.querySelector('canvas').height,cover,upscale);invalidate()}}d.lastX=e.clientX;d.lastY=e.clientY}
 function pointerUp(e,i,el){if(!dragState)return;const d=dragState;dragState=null;const dest=document.elementFromPoint(e.clientX,e.clientY)?.closest('.tile');if(dest&&dest!==el&&preview.contains(dest)&&d.moved){const j=Number(dest.dataset.index);[slots[i],slots[j]]=[slots[j],slots[i]];selected=j;invalidate();render()}else if(!d.moved&&!slots[i])$('#files').click();else render()}
 async function decodeFile(file){if(!file.type.startsWith('image/'))throw Error('画像ファイルを選択してください');const url=URL.createObjectURL(file);try{const img=new Image();img.src=url;await img.decode();return {img,white:false,ox:0,oy:0,fileName:file.name}}finally{URL.revokeObjectURL(url)}}
 async function assignFiles(files,index){let at=index;let success=0;for(const file of files){while(at<slots.length&&slots[at]&&at!==index)at++;if(at>=slots.length)break;try{slots[at]=await decodeFile(file);success++}catch(err){say(file.name+' を読み込めませんでした: '+err.message)}at++}selected=Math.min(index,slots.length-1);invalidate();render();if(success)say(success+'枚の画像を配置しました')}
-$('#files').addEventListener('change',async e=>{const files=[...e.target.files];e.target.value='';if(files.length)await assignFiles(files,selected)});$('#add').onclick=()=>$('#files').click();$('#white').onclick=()=>{slots[selected]={white:true};invalidate();render();say('白画像を配置しました')};$('#clear').onclick=()=>{slots=slots.map(()=>null);invalidate();render();say('すべての枠をクリアしました')};
+$('#files').addEventListener('change',async e=>{const files=[...e.target.files];e.target.value='';if(files.length)await assignFiles(files,selected)});$('#white').onclick=()=>{slots[selected]={white:true};invalidate();render();say('白画像を配置しました')};$('#clear').onclick=()=>{slots=slots.map(()=>null);invalidate();render();say('すべての枠をクリアしました')};
 function syncRatio(changed){if(!$('#lock').checked||lockUpdating)return;lockUpdating=true;const [rw,rh]=chosenTemplate().ratio;const v=number('#'+changed,changed==='width'?2000:1500,100,10000);if(changed==='width')$('#height').value=Math.round(v*rh/rw);else $('#width').value=Math.round(v*rw/rh);lockUpdating=false}
 for(const id of ['width','height','gap','cover','upscale'])$('#'+id).addEventListener('input',()=>{if(id==='width'||id==='height')syncRatio(id);invalidate();render()});$('#lock').addEventListener('change',()=>{syncRatio('width');invalidate();render()});$('#format').addEventListener('change',invalidate);$('#filename').addEventListener('input',()=>{if(generatedBlob)outputName=getFileName()});
 function getFileName(){let name=($('#filename').value||'GridMerge').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').trim()||'GridMerge';const stamp=new Date();const pad=n=>('0'+n).slice(-2);return name+'_'+stamp.getFullYear()+'-'+pad(stamp.getMonth()+1)+'-'+pad(stamp.getDate())+'_'+pad(stamp.getHours())+pad(stamp.getMinutes())+pad(stamp.getSeconds())+($('#format').value==='image/png'?'.png':'.jpg')}
-$('#generate').onclick=async()=>{const W=number('#width',2000,100,10000),H=number('#height',1500,100,10000);if(W*H>70000000){say('生成画像が大きすぎます。70メガピクセル以下にしてください');return}const can=document.createElement('canvas');try{can.width=W;can.height=H;const ctx=can.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);const cover=$('#cover').checked,upscale=$('#upscale').checked,gap=number('#gap',3,0,200);chosenTemplate().rects.forEach(([x,y,w,h],i)=>{const left=Math.round(x*W),top=Math.round(y*H),right=Math.round((x+w)*W),bottom=Math.round((y+h)*H);const sx=left+Math.ceil(gap/2),sy=top+Math.ceil(gap/2),sw=Math.max(1,right-left-gap),sh=Math.max(1,bottom-top-gap);ctx.save();ctx.beginPath();ctx.rect(sx,sy,sw,sh);ctx.clip();ctx.translate(sx,sy);drawSlot(ctx,slots[i],sw,sh,cover,upscale);ctx.restore()});const type=$('#format').value;const blob=await new Promise(resolve=>can.toBlob(resolve,type,.93));if(!blob)throw Error('画像の生成に失敗しました');invalidate();generatedBlob=blob;generatedURL=URL.createObjectURL(blob);outputName=getFileName();result.src=generatedURL;result.style.display='block';$('#resultPlaceholder').style.display='none';$('#download').disabled=false;$('#outputInfo').textContent=`${W} × ${H} px / ${(blob.size/1024/1024).toFixed(2)} MB`;say('画像を生成しました。画像をエクスプローラーへドラッグして保存を試せます。動作しない場合は「通常の保存」を使用してください。')}catch(err){say('生成エラー: '+err.message)}};
+// 保存先のフォルダハンドルは IndexedDB に保存します。画像本体は保存しません。
+let saveDirectory=null;
+const folderLabel=$('#folderState');
+const folderButton=$('#chooseFolder');
+const folderClear=$('#clearFolder');
+const supportsFolderPicker=typeof window.showDirectoryPicker==='function' && window.isSecureContext;
+function updateFolderUI(){
+  folderLabel.classList.toggle('folder-ready',!!saveDirectory);
+  folderLabel.textContent=saveDirectory?'保存先：'+saveDirectory.name+'（生成時に自動保存。権限の再確認が必要な場合があります）':
+    (supportsFolderPicker?'保存先未指定（画像生成後は通常の保存も利用可能）':'このブラウザはフォルダへの直接保存に非対応です');
+  folderClear.hidden=!saveDirectory;
+  folderButton.textContent=saveDirectory?'📁 保存フォルダを変更':'📁 保存フォルダを指定';
+  folderButton.disabled=!supportsFolderPicker;
+}
+function openFolderDB(){return new Promise((resolve,reject)=>{
+  if(!window.indexedDB){reject(new Error('IndexedDB が使用できません'));return}
+  const req=indexedDB.open('gridmerge-web-preferences',1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('settings'))req.result.createObjectStore('settings')};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+})}
+async function directoryStore(operation,handle){
+  const db=await openFolderDB();try{return await new Promise((resolve,reject)=>{
+    const tx=db.transaction('settings',operation==='read'?'readonly':'readwrite');
+    const store=tx.objectStore('settings');
+    const request=operation==='read'?store.get('saveDirectory'):operation==='delete'?store.delete('saveDirectory'):store.put(handle,'saveDirectory');
+    request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);
+  })}finally{db.close()}
+}
+(async()=>{try{const saved=await directoryStore('read');if(saved&&saved.kind==='directory')saveDirectory=saved}catch(e){console.warn('保存先設定の復元に失敗:',e)}updateFolderUI()})();
+folderButton.addEventListener('click',async()=>{
+  if(!supportsFolderPicker){say('フォルダ指定はWindows版Chrome / Edgeなど対応ブラウザで利用できます。');return}
+  try{
+    const selected=await window.showDirectoryPicker({mode:'readwrite',id:'gridmerge-output'});
+    saveDirectory=selected;
+    try{await directoryStore('write',selected)}catch(e){console.warn('フォルダ設定を記憶できませんでした',e)}
+    updateFolderUI();say('保存先を「'+selected.name+'」に設定しました。生成するとこのフォルダに保存します。');
+  }catch(e){if(e.name!=='AbortError')say('フォルダを設定できませんでした: '+e.message)}
+});
+folderClear.addEventListener('click',async()=>{saveDirectory=null;updateFolderUI();try{await directoryStore('delete')}catch(e){console.warn(e)}say('保存先の指定を解除しました')});
+async function ensureDirectoryPermission(handle){
+  const opts={mode:'readwrite'};
+  if(await handle.queryPermission(opts)==='granted')return true;
+  return await handle.requestPermission(opts)==='granted';
+}
+async function saveBlobInDirectory(handle,blob,name){
+  const fileHandle=await handle.getFileHandle(name,{create:true});
+  const writable=await fileHandle.createWritable();
+  try{await writable.write(blob);await writable.close()}catch(e){try{await writable.abort()}catch(_){}throw e}
+}
+$('#generate').onclick=async()=>{
+  let approvedDirectory=null;
+  if(saveDirectory){
+    try{if(await ensureDirectoryPermission(saveDirectory))approvedDirectory=saveDirectory;
+      else say('保存フォルダへのアクセスが許可されませんでした。画像は生成しますが自動保存は行いません。');
+    }catch(e){say('保存先へのアクセス確認に失敗しました: '+e.message)}
+  }
+  const W=number('#width',2000,100,10000),H=number('#height',1500,100,10000);if(W*H>70000000){say('生成画像が大きすぎます。70メガピクセル以下にしてください');return}const can=document.createElement('canvas');try{can.width=W;can.height=H;const ctx=can.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);const cover=$('#cover').checked,upscale=$('#upscale').checked,gap=number('#gap',3,0,200);chosenTemplate().rects.forEach(([x,y,w,h],i)=>{const left=Math.round(x*W),top=Math.round(y*H),right=Math.round((x+w)*W),bottom=Math.round((y+h)*H);const sx=left+Math.ceil(gap/2),sy=top+Math.ceil(gap/2),sw=Math.max(1,right-left-gap),sh=Math.max(1,bottom-top-gap);ctx.save();ctx.beginPath();ctx.rect(sx,sy,sw,sh);ctx.clip();ctx.translate(sx,sy);drawSlot(ctx,slots[i],sw,sh,cover,upscale);ctx.restore()});const type=$('#format').value;const blob=await new Promise(resolve=>can.toBlob(resolve,type,.93));if(!blob)throw Error('画像の生成に失敗しました');invalidate();generatedBlob=blob;generatedURL=URL.createObjectURL(blob);outputName=getFileName();result.src=generatedURL;result.style.display='block';$('#resultPlaceholder').style.display='none';$('#download').disabled=false;$('#outputInfo').textContent=`${W} × ${H} px / ${(blob.size/1024/1024).toFixed(2)} MB`;if(approvedDirectory){
+  try{await saveBlobInDirectory(approvedDirectory,blob,outputName);say('画像を生成し「'+approvedDirectory.name+'」に '+outputName+' を保存しました。')}catch(e){say('画像は生成しましたが、フォルダへの自動保存に失敗しました: '+e.message+'。「通常の保存」を使用してください。')}
+}else if(saveDirectory){say('画像を生成しました。保存先へのアクセスを許可できなかったため、下の「通常の保存」をご利用ください。')}
+else{say('画像を生成しました。保存フォルダを指定すると次回から生成時に自動保存します。')}}catch(err){say('生成エラー: '+err.message)}};
 $('#download').onclick=()=>{if(!generatedURL)return;const a=document.createElement('a');a.href=generatedURL;a.download=outputName||getFileName();document.body.appendChild(a);a.click();a.remove()};
 result.addEventListener('dragstart',e=>{if(!generatedBlob||!generatedURL){e.preventDefault();return}const filename=outputName||getFileName();const mime=generatedBlob.type||'image/png';e.dataTransfer.effectAllowed='copy';try{const f=new File([generatedBlob],filename,{type:mime});e.dataTransfer.items.add(f)}catch(_){}try{e.dataTransfer.setData('DownloadURL',`${mime}:${filename}:${generatedURL}`)}catch(_){}try{e.dataTransfer.setData('text/uri-list',generatedURL)}catch(_){}say('エクスプローラーへドロップしてください。ブラウザの制約で保存できなければ「通常の保存」を使用してください。')});
-window.addEventListener('resize',render);preview.addEventListener('dragover',e=>e.preventDefault());preview.addEventListener('drop',e=>{e.preventDefault();if(!e.target.closest('.tile'))assignFiles([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')),selected)});
+window.addEventListener('resize',render);if(window.ResizeObserver){const ro=new ResizeObserver(()=>{requestAnimationFrame(()=>render())});ro.observe(preview)}preview.addEventListener('dragover',e=>e.preventDefault());preview.addEventListener('drop',e=>{e.preventDefault();if(!e.target.closest('.tile'))assignFiles([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')),selected)});
 setTemplate(0);
 })();
 </script>
