@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GridMerge Web v1.5 — 写真結合（GitHub Pages版）</title>
+<title>GridMerge Web v1.10 — 写真結合（GitHub Pages版）</title>
 <meta name="description" content="写真を分割テンプレートで結合できるブラウザ版GridMerge。画像はブラウザ内で処理し外部に送信しません。">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
@@ -169,10 +169,12 @@ main{max-width:1600px;margin:10px auto;padding:0 12px;grid-template-columns:minm
  .editor-heading h2 span{font-size:10px}
  .editor-actions .btn{padding:5px 6px;font-size:10px}
 }
+
+.app-version{font-size:12px;font-weight:600;color:#6b7f99;white-space:nowrap;margin-left:3px}
 </style>
 </head>
 <body>
-<header><div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="7" width="48" height="45" rx="6" fill="#1871c6"/><rect x="9" y="13" width="36" height="32" rx="3" fill="#e5f4ff"/><circle cx="19" cy="22" r="5" fill="#1871c6"/><path d="M10 42l12-13 8 8 7-10 8 11v6H10" fill="#1871c6"/><circle cx="47" cy="46" r="15" fill="#1ea34a" stroke="white" stroke-width="3"/><path d="M38 46l6 6 11-14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>GridMerge <span style="font-weight:450;color:#6b7f99;font-size:14px">Web</span></div><small>写真の処理は端末内で完結・サーバー送信なし</small></header>
+<header><div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="7" width="48" height="45" rx="6" fill="#1871c6"/><rect x="9" y="13" width="36" height="32" rx="3" fill="#e5f4ff"/><circle cx="19" cy="22" r="5" fill="#1871c6"/><path d="M10 42l12-13 8 8 7-10 8 11v6H10" fill="#1871c6"/><circle cx="47" cy="46" r="15" fill="#1ea34a" stroke="white" stroke-width="3"/><path d="M38 46l6 6 11-14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>GridMerge <span style="font-weight:450;color:#6b7f99;font-size:14px">Web</span> <span class="app-version">v1.10</span></div><small>写真の処理は端末内で完結・サーバー送信なし</small></header>
 <main>
 <section class="panel">
 <div class="editor-heading">
@@ -222,7 +224,7 @@ const T=[
 {name:'6分割｜2×3',ratio:[3,4],rects:Array.from({length:6},(_,i)=>[(i%2)/2,Math.floor(i/2)/3,1/2,1/3])},
 {name:'9分割｜3×3',ratio:[4,3],rects:Array.from({length:9},(_,i)=>[(i%3)/3,Math.floor(i/3)/3,1/3,1/3])},
 ];
-let template=0, slots=[], selected=0, generatedBlob=null, generatedURL=null, outputName='', lockUpdating=false, dragState=null;
+let template=6, slots=[], selected=0, generatedBlob=null, generatedURL=null, outputName='', lockUpdating=false, dragState=null;
 function say(msg){status.textContent=msg}
 function number(id,fallback,min,max){const v=Number($(id).value);return Number.isFinite(v)?Math.max(min,Math.min(max,v)):fallback}
 function invalidate(){if(generatedURL)URL.revokeObjectURL(generatedURL);generatedURL=null;generatedBlob=null;result.removeAttribute('src');result.style.display='none';$('#resultPlaceholder').style.display='';$('#download').disabled=true;$('#outputInfo').textContent=''}
@@ -325,7 +327,7 @@ else{say('画像を生成しました。保存フォルダを指定すると次�
 $('#download').onclick=()=>{if(!generatedURL)return;const a=document.createElement('a');a.href=generatedURL;a.download=outputName||getFileName();document.body.appendChild(a);a.click();a.remove()};
 result.addEventListener('dragstart',e=>{if(!generatedBlob||!generatedURL){e.preventDefault();return}const filename=outputName||getFileName();const mime=generatedBlob.type||'image/png';e.dataTransfer.effectAllowed='copy';try{const f=new File([generatedBlob],filename,{type:mime});e.dataTransfer.items.add(f)}catch(_){}try{e.dataTransfer.setData('DownloadURL',`${mime}:${filename}:${generatedURL}`)}catch(_){}try{e.dataTransfer.setData('text/uri-list',generatedURL)}catch(_){}say('エクスプローラーへドロップしてください。ブラウザの制約で保存できなければ「通常の保存」を使用してください。')});
 window.addEventListener('resize',render);if(window.ResizeObserver){const ro=new ResizeObserver(()=>{requestAnimationFrame(()=>render())});ro.observe(preview)}preview.addEventListener('dragover',e=>e.preventDefault());preview.addEventListener('drop',e=>{e.preventDefault();if(!e.target.closest('.tile'))assignFiles([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')),selected)});
-setTemplate(0);
+setTemplate(6);
 })();
 </script>
 </body></html>
