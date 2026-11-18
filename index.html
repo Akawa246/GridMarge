@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GridMerge Web v1.10 — 写真結合（GitHub Pages版）</title>
+<title>GridMerge Web v1.11 — 写真結合（GitHub Pages版）</title>
 <meta name="description" content="写真を分割テンプレートで結合できるブラウザ版GridMerge。画像はブラウザ内で処理し外部に送信しません。">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
@@ -174,7 +174,7 @@ main{max-width:1600px;margin:10px auto;padding:0 12px;grid-template-columns:minm
 </style>
 </head>
 <body>
-<header><div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="7" width="48" height="45" rx="6" fill="#1871c6"/><rect x="9" y="13" width="36" height="32" rx="3" fill="#e5f4ff"/><circle cx="19" cy="22" r="5" fill="#1871c6"/><path d="M10 42l12-13 8 8 7-10 8 11v6H10" fill="#1871c6"/><circle cx="47" cy="46" r="15" fill="#1ea34a" stroke="white" stroke-width="3"/><path d="M38 46l6 6 11-14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>GridMerge <span style="font-weight:450;color:#6b7f99;font-size:14px">Web</span> <span class="app-version">v1.10</span></div><small>写真の処理は端末内で完結・サーバー送信なし</small></header>
+<header><div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="7" width="48" height="45" rx="6" fill="#1871c6"/><rect x="9" y="13" width="36" height="32" rx="3" fill="#e5f4ff"/><circle cx="19" cy="22" r="5" fill="#1871c6"/><path d="M10 42l12-13 8 8 7-10 8 11v6H10" fill="#1871c6"/><circle cx="47" cy="46" r="15" fill="#1ea34a" stroke="white" stroke-width="3"/><path d="M38 46l6 6 11-14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>GridMerge <span style="font-weight:450;color:#6b7f99;font-size:14px">Web</span> <span class="app-version">v1.11</span></div><small>写真の処理は端末内で完結・サーバー送信なし</small></header>
 <main>
 <section class="panel">
 <div class="editor-heading">
@@ -216,13 +216,16 @@ const T=[
 {name:'2分割｜上下',ratio:[3,4],rects:[[0,0,1,.5],[0,.5,1,.5]]},
 {name:'3分割｜1＋2',ratio:[4,3],rects:[[0,0,.5,1],[.5,0,.5,.5],[.5,.5,.5,.5]]},
 {name:'3分割｜2＋1',ratio:[4,3],rects:[[0,0,.5,.5],[0,.5,.5,.5],[.5,0,.5,1]]},
-{name:'3分割｜上1+下2*',ratio:[8,9],rects:[[0,0,1,2/3],[0,2/3,.5,1/3],[.5,2/3,.5,1/3]]},
-	{name:'3分割｜上1＋下2',ratio:[4,5],rects:[[0,0,1,3/5],[0,3/5,.5,2/5],[.5,3/5,.5,2/5]]},
+// Windows v2.9.11: 8:7 canvas, upper 2:1, lower two 4:3 panels.
+{name:'3分割｜上1+下2*',ratio:[8,7],rects:[[0,0,1,4/7],[0,4/7,.5,3/7],[.5,4/7,.5,3/7]]},
+// Windows v2.9.11: square canvas, upper 2:1, lower two square panels.
+{name:'3分割｜上1＋下2',ratio:[1,1],rects:[[0,0,1,.5],[0,.5,.5,.5],[.5,.5,.5,.5]]},
 {name:'4分割｜2×2（横）',ratio:[4,3],rects:[[0,0,.5,.5],[.5,0,.5,.5],[0,.5,.5,.5],[.5,.5,.5,.5]]},
 {name:'4分割｜2×2（縦）',ratio:[3,4],rects:[[0,0,.5,.5],[.5,0,.5,.5],[0,.5,.5,.5],[.5,.5,.5,.5]]},
 {name:'6分割｜3×2',ratio:[4,3],rects:Array.from({length:6},(_,i)=>[(i%3)/3,Math.floor(i/3)/2,1/3,1/2])},
 {name:'6分割｜2×3',ratio:[3,4],rects:Array.from({length:6},(_,i)=>[(i%2)/2,Math.floor(i/2)/3,1/2,1/3])},
 {name:'9分割｜3×3',ratio:[4,3],rects:Array.from({length:9},(_,i)=>[(i%3)/3,Math.floor(i/3)/3,1/3,1/3])},
+{name:'2分割｜上下*',ratio:[1,1],rects:[[0,0,1,.5],[0,.5,1,.5]]},
 ];
 let template=6, slots=[], selected=0, generatedBlob=null, generatedURL=null, outputName='', lockUpdating=false, dragState=null;
 function say(msg){status.textContent=msg}
@@ -232,8 +235,8 @@ function chosenTemplate(){return T[template]}
 function setTemplate(i){template=i;const t=chosenTemplate();const previous=slots;slots=t.rects.map((_,j)=>previous[j]||null);selected=Math.min(selected,slots.length-1);for(const b of templateBox.querySelectorAll('.template'))b.classList.toggle('active',Number(b.dataset.templateIndex)===i);if($('#lock').checked){$('#height').value=Math.round(number('#width',2000,100,10000)*t.ratio[1]/t.ratio[0])}invalidate();render()}
 function makeThumb(t){const c=document.createElement('canvas');c.width=148;c.height=110;const ctx=c.getContext('2d');const r=t.ratio[0]/t.ratio[1];const W=Math.min(140,105*r),H=W/r,left=(148-W)/2,top=(110-H)/2;ctx.fillStyle='#d7e4f3';for(let j=0;j<t.rects.length;j++){const [x,y,w,h]=t.rects[j];ctx.fillRect(left+x*W+1,top+y*H+1,w*W-2,h*H-2);ctx.fillStyle='#a6bad1';ctx.fillRect(left+x*W+6,top+y*H+6,Math.max(w*W-12,4),Math.max(h*H-12,4));ctx.fillStyle='#d7e4f3'}return c}
 const templateGroups=[
-  {title:'2分割',indices:[0,1]},
-  {title:'3分割',indices:[2,3,4,5]},
+  {title:'2分割',indices:[11,1,0]},
+  {title:'3分割',indices:[4,5,2,3]},
   {title:'4分割',indices:[6,7]},
   {title:'その他',indices:[8,9,10]}
 ];
